@@ -1,0 +1,11 @@
+function [XtVt] = Analytical(t,x)
+% Lam, Richard - 012358411 - UDF 2 - 03/01/2022
+
+%Define global variables
+global m c k1 k2;
+
+% x(t) and v(t) equations
+XtVt(1,:) = 0.04*exp(-6*t).*cos(8*t)+0.03*exp(-6*t).*sin(8*t);
+XtVt(2,:) = -0.5*exp(-6*t).*sin(8*t);
+
+end
