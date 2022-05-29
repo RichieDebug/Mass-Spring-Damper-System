@@ -1,0 +1,14 @@
+function [xdot] = linear_ODE(t,x)
+% Lam, Richard - 012358411 - UDF 1 - 03/01/2022
+
+%Define global variables
+global m c k1 k2;
+
+% Matrix
+xdot = zeros(2,1); 
+
+% x(t) and v(t) linearized 
+xdot(1) = x(2);
+xdot(2) = (-(x(1)*(k1+k2)/m)+(-c/m)*x(2));
+
+end
