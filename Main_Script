@@ -1,0 +1,80 @@
+%%
+% Lam, Richard - 012358411 - HW1, Problem 4C - 03/01/2022
+%
+% Description: This script simulates the responses x(t) and v(t) given initial conditions.
+% Variables:
+% m: Scalar value for mass. (kg)
+% c: Scalar value for the launch angle. (Ns/m)
+% K1: Scalar value for the spring constant. (N/m)
+% K2: Scalar value for the spring constant. (N/m)
+% x0 = Initial position (m) and initial velocity (m/s). 
+% t0 = Initial time. (s)
+% ti = Time step. (s)
+% tf = Final time. (s)
+% x(t) = Horizontal distance WRT time. (m)
+% v(t) = Velocity WRT time. (m/s)
+% prompt = character for user input.
+clear; clc; close all; % Clears the workspace and command window.
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Define variables and parameters%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+global m c k1 k2;
+m = 0.5;
+c = 6;
+k1 = 30;  
+k2 = 20; 
+
+x0 = [0.4,0];
+t0 = 0;
+ti = 0.01;
+tf = 5;
+tvector = (t0:ti:tf); % Set 0 as time=0s and 50s as the end of the time. I also made it go in intervals of 0.01s.
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%Problem 4,B&C Equations%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+[t_lin,x_lin] = ode45('linear_ODE',tvector,x0); % Calls linear_ODE UDF, sends tvector and x0 to UDF.
+XV = Analytical(tvector,x0); % Calls analytical UDF, sends tvector and x0 to UDF
+%%
+%%%%%%%%%%%
+%Plot data%
+%%%%%%%%%%%
+hold all % This is so each plot is actually gets plotted instead of overriding each other. 
+
+subplot(2,2,1)
+figure(1);
+plot(t_lin,x_lin (:,1),'color','g','linestyle','-');
+title('Position vs. Time of System - ODE');
+xlabel('Time (s)');
+ylabel('Displacement (m)');
+legend('Computational');
+set (findall (gcf, 'type', 'line'),'linewidth',2);
+set (gca, 'fontsize', 8);
+
+subplot(2,2,2)
+plot(tvector (1,:),XV (1,:),'color', 'r','linestyle',':');
+title('Position vs. Time of System - Laplace');
+xlabel('Time (s)');
+ylabel('Displacement (m)');
+legend('Analytical');
+set (findall (gcf, 'type', 'line'),'linewidth',2);
+set (gca, 'fontsize', 8);
+
+subplot(2,2,3)
+plot(t_lin,x_lin (:,2),'color', 'g','linestyle','-');
+title('Velocity vs. Time of System - ODE');
+xlabel('Time (s)');
+ylabel('Velocity (m/s)');
+legend('Computational');
+set (findall (gcf, 'type', 'line'),'linewidth',2);
+set (gca, 'fontsize', 8);
+
+subplot(2,2,4)
+plot(tvector (1,:),XV (2,:),'color', 'r','linestyle',':');
+title('Velocity vs. Time of System - Laplace');
+xlabel('Time (s)');
+ylabel('Velocity (m/s)');
+legend('Analytical');
+set (findall (gcf, 'type', 'line'),'linewidth',2);
+set (gca, 'fontsize', 8);
